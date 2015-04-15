@@ -1,6 +1,6 @@
-package util;
+package org.bg.winddata.util;
 
-import domain.Reading;
+import org.bg.winddata.domain.Reading;
 import java.util.ArrayList;
 
 public class ObjectUtility {
