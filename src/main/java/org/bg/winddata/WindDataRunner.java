@@ -21,6 +21,4 @@ public class WindDataRunner {
         ObjectUtility.printAllReadings(listOfReadings);
     }
 
-
-
 }
