@@ -5,7 +5,7 @@
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="webScraper"
-          class="org.bg.winddata.WebScraper">
+          class="org.bg.winddata.WeatherFileWebScraper">
         <property name="url" value="http://www.weather-file.com/lymington/graph.htm"/>
         <property name="fileLocation" value="/Users/benjamingeorge/IdeaProjects/winddata/src/main/resources/html/winddataSource.htm"/>
     </bean>

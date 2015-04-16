@@ -16,6 +16,9 @@ public class WindDataRunner {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/application-context.xml");
 
         WebScraper webScraper = (WebScraper) applicationContext.getBean("webScraper");
+
+
+
         listOfReadings = webScraper.getReadingsFromWeb(listOfReadings);
         //listOfReadings = webScraper.getReadingsFromFile(listOfReadings);
         ObjectUtility.printAllReadings(listOfReadings);
