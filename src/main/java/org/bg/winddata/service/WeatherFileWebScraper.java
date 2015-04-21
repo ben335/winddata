@@ -1,16 +1,17 @@
-package org.bg.winddata;
+package org.bg.winddata.service;
 
 import org.bg.winddata.domain.Reading;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Date;
 
-public class WeatherFileWebScraper extends  WebScraper {
+public class WeatherFileWebScraper extends WebScraper {
 
 
     public Elements parseElements(Document doc) {
@@ -28,17 +29,20 @@ public class WeatherFileWebScraper extends  WebScraper {
             //System.out.println("=============== NEW ROW =============  " + tds.size());
 
             if (tds.size() == 8) {
-
                 Reading reading = new Reading();
-
                 String date = tds.get(0).text();
                 String time = tds.get(1).text();
                 String tempDateTime = tds.get(0).text() + ", " + tds.get(1).text();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, H:m", Locale.ENGLISH);
-                LocalDateTime dateTime = LocalDateTime.parse(tempDateTime, formatter);
-                //System.out.println(dateTime);
-                reading.setDateTime(dateTime);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM yyyy, H:m");
+                Date parsedDate = null;
+                try {
+                    parsedDate = dateFormat.parse(tempDateTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Timestamp dateTime = new java.sql.Timestamp(parsedDate.getTime());
 
+                reading.setDateTime(dateTime);
                 reading.setBacked(Integer.parseInt(tds.get(2).text()));
                 reading.setAvgWindDirection(Integer.parseInt(tds.get(3).text()));
                 reading.setVeered(Integer.parseInt(tds.get(4).text()));

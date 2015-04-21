@@ -1,35 +1,32 @@
-package org.bg.winddata;
+package org.bg.winddata.service;
 
+import org.bg.winddata.DaoFactory;
+import org.bg.winddata.DynamicContentScraper;
 import org.bg.winddata.domain.Reading;
+import org.hibernate.HibernateException;
+import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@Transactional(rollbackFor = HibernateException.class)
 public abstract class WebScraper {
 
-    ArrayList<Reading> listOfReadings = new ArrayList();
     public String url = null;
     public String fileLocation = null;
+    public DaoFactory daoFactory;
 
     public WebScraper() {
     }
 
-    public WebScraper(ArrayList<Reading> listOfReadings, String url, String fileLocation) {
-        this.listOfReadings = listOfReadings;
-        this.url = url;
-        this.fileLocation = fileLocation;
-    }
-
-    public ArrayList<Reading> getListOfReadings() {
-        return listOfReadings;
-    }
-
-    public void setListOfReadings(ArrayList<Reading> listOfReadings) {
-        this.listOfReadings = listOfReadings;
+    public void setDaoFactory(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
     }
 
     public String getUrl() {
@@ -48,11 +45,21 @@ public abstract class WebScraper {
         this.fileLocation = fileLocation;
     }
 
-    public ArrayList<Reading> getReadingsFromWeb(ArrayList<Reading> listOfReadings) throws IOException {
+    public void getReadingsFromWeb() throws IOException {
         Document doc = parseWebPage(url);
         Elements rows = parseElements(doc);
+        ArrayList<Reading> listOfReadings = new ArrayList();
         listOfReadings = parseRows(rows);
-        return listOfReadings;
+        for (Reading reading: listOfReadings){
+            try {
+            System.out.println("Adding this record to database" + reading.getDateTime());
+            this.daoFactory.getReadingDao().addReading(reading);
+            } catch (RuntimeException e){
+                System.out.println("Got exception" + e);
+                throw e;
+            }
+
+        }
     }
 
     public ArrayList<Reading> getReadingsFromFile(ArrayList<Reading> listOfReadings) throws IOException {

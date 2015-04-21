@@ -1,10 +1,11 @@
 package org.bg.winddata.domain;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Reading {
 
-    LocalDateTime dateTime;
+    int id;
+    Timestamp dateTime;
     int backed;
     int avgWindDirection;
     int veered;
@@ -12,10 +13,12 @@ public class Reading {
     double avgWindSpeed;
     double maxWindSpeed;
 
+
     public Reading() {
     }
 
-    public Reading(LocalDateTime dateTime, LocalDateTime time, int backed, int avgWindDirection, int veered, double minWindSpeed, double avgWindSpeed, double maxWindSpeed) {
+    public Reading(int id, Timestamp dateTime, int backed, int avgWindDirection, int veered, double minWindSpeed, double avgWindSpeed, double maxWindSpeed) {
+        this.id = id;
         this.dateTime = dateTime;
         this.backed = backed;
         this.avgWindDirection = avgWindDirection;
@@ -25,11 +28,19 @@ public class Reading {
         this.maxWindSpeed = maxWindSpeed;
     }
 
-    public LocalDateTime getDateTime() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Timestamp getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
     }
 

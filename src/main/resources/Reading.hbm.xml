@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.bg.winddata.domain.Reading" table="reading">
+        <id name="id" column="ID"/>
+        <property name="dateTime" column="LOCAL_DATE_TIME" type="java.sql.Timestamp" />
+        <property name="backed" column="BACKED" type="java.lang.Integer"/>
+        <property name="avgWindDirection" column="AVG_WIND_DIRECTION" type="java.lang.Integer"/>
+        <property name="veered" column="VEERED" type="java.lang.Integer"/>
+        <property name="minWindSpeed" column="MIN_WIND_SPEED" type="java.lang.Double"/>
+        <property name="avgWindSpeed" column="AVG_WIND_SPEED" type="java.lang.Double"/>
+        <property name="maxWindSpeed" column="MAX_WIND_SPEED" type="java.lang.Double"/>
+    </class>
+</hibernate-mapping>
