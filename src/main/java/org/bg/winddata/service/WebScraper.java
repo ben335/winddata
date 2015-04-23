@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Transactional(rollbackFor = HibernateException.class)
 public abstract class WebScraper {
@@ -50,13 +51,16 @@ public abstract class WebScraper {
         Elements rows = parseElements(doc);
         ArrayList<Reading> listOfReadings = new ArrayList();
         listOfReadings = parseRows(rows);
+        Collections.reverse(listOfReadings);
         for (Reading reading: listOfReadings){
-            try {
-            System.out.println("Adding this record to database" + reading.getDateTime());
-            this.daoFactory.getReadingDao().addReading(reading);
-            } catch (RuntimeException e){
-                System.out.println("Got exception" + e);
-                throw e;
+            if (!this.daoFactory.getReadingDao().existsByDateTime(reading)){
+                try {
+                System.out.println("Adding this record to database" + reading.getDateTime());
+                this.daoFactory.getReadingDao().addReading(reading);
+                } catch (RuntimeException e){
+                    System.out.println("Got exception" + e);
+                    throw e;
+                }
             }
 
         }
