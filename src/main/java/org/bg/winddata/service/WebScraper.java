@@ -1,8 +1,10 @@
 package org.bg.winddata.service;
 
+import org.apache.log4j.Logger;
 import org.bg.winddata.DaoFactory;
 import org.bg.winddata.DynamicContentScraper;
 import org.bg.winddata.domain.Reading;
+import org.bg.winddata.util.ObjectUtility;
 import org.hibernate.HibernateException;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
@@ -18,6 +20,8 @@ import java.util.Collections;
 
 @Transactional(rollbackFor = HibernateException.class)
 public abstract class WebScraper {
+
+    final static Logger logger = Logger.getLogger(WebScraper.class);
 
     public String url = null;
     public String fileLocation = null;
@@ -47,22 +51,24 @@ public abstract class WebScraper {
     }
 
     public void getReadingsFromWeb() throws IOException {
+        logger.info("Getting Readings from website: " + url);
         Document doc = parseWebPage(url);
         Elements rows = parseElements(doc);
         ArrayList<Reading> listOfReadings = new ArrayList();
         listOfReadings = parseRows(rows);
         Collections.reverse(listOfReadings);
+        //ObjectUtility.printAllReadings(listOfReadings);
         for (Reading reading: listOfReadings){
             if (!this.daoFactory.getReadingDao().existsByDateTime(reading)){
                 try {
-                System.out.println("Adding this record to database" + reading.getDateTime());
-                this.daoFactory.getReadingDao().addReading(reading);
+                    this.daoFactory.getReadingDao().addReading(reading);
+                    logger.info("Added record to database: " + ObjectUtility.printReading(reading));
+
                 } catch (RuntimeException e){
-                    System.out.println("Got exception" + e);
+                    logger.error("Exception when storing to the database: ", e);
                     throw e;
                 }
             }
-
         }
     }
 

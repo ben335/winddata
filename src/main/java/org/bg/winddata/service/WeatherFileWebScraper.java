@@ -17,7 +17,6 @@ public class WeatherFileWebScraper extends WebScraper {
     public Elements parseElements(Document doc) {
         Element table = doc.getElementById("datatable");
         Elements rows = table.getElementsByTag("TR");
-        //System.out.println(rows);
         return rows;
     }
 
@@ -26,7 +25,6 @@ public class WeatherFileWebScraper extends WebScraper {
         ArrayList<Reading> listOfReadingsTemp = new ArrayList();
         for (Element row : rows) {
             Elements tds = row.getElementsByTag("TD");
-            //System.out.println("=============== NEW ROW =============  " + tds.size());
 
             if (tds.size() == 8) {
                 Reading reading = new Reading();
@@ -38,6 +36,7 @@ public class WeatherFileWebScraper extends WebScraper {
                 try {
                     parsedDate = dateFormat.parse(tempDateTime);
                 } catch (ParseException e) {
+                    logger.error("Exception when parsing rows in the weather file scraper: ", e);
                     e.printStackTrace();
                 }
                 Timestamp dateTime = new java.sql.Timestamp(parsedDate.getTime());

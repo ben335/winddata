@@ -13,4 +13,9 @@ public class ObjectUtility {
             //System.out.println("Date time: " + reading.getDateTime() + " Backed: " + reading.getBacked() + " Avg Wind Direction: " + reading.getAvgWindDirection() + " Veered: " + reading.getVeered() + " Min Wind Speed: " + reading.getMinWindSpeed() + " Avg Wind Speed: " + reading.getAvgWindSpeed() + " Max Wind Speed: " + reading.getMaxWindSpeed());
         }
     }
+
+    public static String printReading(Reading reading) {
+         return ("Date time: " + reading.getDateTime() + " Backed: " + reading.getBacked() + " Avg Wind Direction: " + reading.getAvgWindDirection() + " Veered: " + reading.getVeered() + " Min Wind Speed: " + reading.getMinWindSpeed() + " Avg Wind Speed: " + reading.getAvgWindSpeed() + " Max Wind Speed: " + reading.getMaxWindSpeed());
+
+    }
 }
