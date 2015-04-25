@@ -19,7 +19,7 @@ public class WindDataApp {
 
         WebScraper webScraper = (WebScraper) applicationContext.getBean("webScraper");
 
-        webScraper.getReadingsFromWeb();
+        //webScraper.getReadingsFromWeb();
     }
 
 }

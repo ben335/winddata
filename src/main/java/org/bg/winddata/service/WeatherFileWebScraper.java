@@ -1,18 +1,24 @@
 package org.bg.winddata.service;
 
+import org.bg.winddata.DaoFactory;
 import org.bg.winddata.domain.Reading;
+import org.hibernate.HibernateException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 public class WeatherFileWebScraper extends WebScraper {
 
+    public WeatherFileWebScraper(String url, DaoFactory daoFactory) throws IOException {
+        super(url, daoFactory);
+    }
 
     public Elements parseElements(Document doc) {
         Element table = doc.getElementById("datatable");

@@ -5,10 +5,11 @@ import org.bg.winddata.util.ObjectUtility;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+@Transactional
 public class ReadingDaoImpl extends HibernateDaoSupport implements ReadingDao {
 
     public void addReading(Reading reading) throws RuntimeException {

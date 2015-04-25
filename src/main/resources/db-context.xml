@@ -3,13 +3,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   					   http://www.springframework.org/schema/tx
-	   					   http://www.springframework.org/schema/tx/spring-tx.xsd">
+	   					   http://www.springframework.org/schema/tx/spring-tx.xsd
+	   					   http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 
     <tx:annotation-driven transaction-manager="transactionManager" />
+
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
@@ -48,11 +53,11 @@
         <property name="readingDao" ref="readingDao" />
     </bean>
 
+    <task:annotation-driven />
     <bean id="webScraper"
           class="org.bg.winddata.service.WeatherFileWebScraper">
-        <property name="url" value="http://www.weather-file.com/lymington/graph.htm"/>
-        <property name="fileLocation" value="/Users/benjamingeorge/IdeaProjects/winddata/src/main/resources/html/winddataSource.htm"/>
-        <property name="daoFactory" ref="daoFactory" />
+          <constructor-arg type="java.lang.String" value="http://www.weather-file.com/lymington/graph.htm"/>
+          <constructor-arg ref="daoFactory"/>
     </bean>
 
 </beans>

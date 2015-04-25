@@ -11,12 +11,15 @@ import org.hibernate.Transaction;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 @Transactional(rollbackFor = HibernateException.class)
 public abstract class WebScraper {
@@ -27,8 +30,14 @@ public abstract class WebScraper {
     public String fileLocation = null;
     public DaoFactory daoFactory;
 
-    public WebScraper() {
+    public WebScraper(String url, DaoFactory daoFactory) throws IOException {
+        this.url = url;
+        this.daoFactory = daoFactory;
+        logger.info("Loaded constructor with dao and url: " + url);
+        getReadingsFromWeb();
     }
+
+
 
     public void setDaoFactory(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -50,8 +59,10 @@ public abstract class WebScraper {
         this.fileLocation = fileLocation;
     }
 
+    @Scheduled(cron="0 0/5 * * * ?")
     public void getReadingsFromWeb() throws IOException {
         logger.info("Getting Readings from website: " + url);
+        logger.info("Current time is :: " + new Date());
         Document doc = parseWebPage(url);
         Elements rows = parseElements(doc);
         ArrayList<Reading> listOfReadings = new ArrayList();
