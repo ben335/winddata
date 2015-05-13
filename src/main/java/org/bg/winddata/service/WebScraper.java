@@ -29,15 +29,16 @@ public abstract class WebScraper {
     public String url = null;
     public String fileLocation = null;
     public DaoFactory daoFactory;
+    public int stationId;
 
-    public WebScraper(String url, DaoFactory daoFactory) throws IOException {
+    public WebScraper(String url, DaoFactory daoFactory, int stationId) throws IOException {
         this.url = url;
         this.daoFactory = daoFactory;
+        this.stationId = stationId;
         logger.info("Loaded constructor with dao and url: " + url);
+
         getReadingsFromWeb();
     }
-
-
 
     public void setDaoFactory(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -47,17 +48,16 @@ public abstract class WebScraper {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+    public void setUrl(String url) { this.url = url; }
 
-    public String getFileLocation() {
-        return fileLocation;
-    }
+    public String getFileLocation() { return fileLocation; }
 
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
-    }
+    public void setFileLocation(String fileLocation) { this.fileLocation = fileLocation; }
+
+    public int getStationId() { return stationId; }
+
+    public void setStationId(int stationId) { this.stationId = stationId; }
+
 
     @Scheduled(cron="0 0/5 * * * ?")
     public void getReadingsFromWeb() throws IOException {
@@ -81,19 +81,6 @@ public abstract class WebScraper {
                 }
             }
         }
-    }
-
-    public ArrayList<Reading> getReadingsFromFile(ArrayList<Reading> listOfReadings) throws IOException {
-        Document doc = parsePage(fileLocation);
-        Elements rows = parseElements(doc);
-        listOfReadings = parseRows(rows);
-        return listOfReadings;
-    }
-
-    public Document parsePage(String fileLocation) throws IOException {
-        File input = new File(fileLocation);
-        Document doc = Jsoup.parse(input, "UTF-8", "");
-        return doc;
     }
 
     public Document parseWebPage(String url) throws IOException {

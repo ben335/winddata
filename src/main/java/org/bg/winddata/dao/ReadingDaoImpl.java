@@ -26,12 +26,14 @@ public class ReadingDaoImpl extends HibernateDaoSupport implements ReadingDao {
     public boolean existsByDateTime (Reading reading) {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Reading.class);
         criteria.add(Restrictions.eq("dateTime", reading.getDateTime()));
+        criteria.add(Restrictions.eq("stationId", reading.getStationId()));
+        //TODO check station id to ensure that the reading exists for the correct station
         List<Reading> readings = criteria.list();
         if (readings.isEmpty()){
             logger.info("No previous same readings found");
             return false;
         }else {
-            logger.info("Previous same readings found in reading: " + ObjectUtility.printReading(reading));
+            logger.info("Previous same reading found for station: " + reading.getStationId() + " in reading: " + ObjectUtility.printReading(reading));
             return true;
         }
 

@@ -1,7 +1,6 @@
 package org.bg.winddata.app;
 
 import org.apache.log4j.Logger;
-import org.bg.winddata.service.WebScraper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.IOException;
@@ -17,9 +16,6 @@ public class WindDataApp {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/db-context.xml");
 
-        WebScraper webScraper = (WebScraper) applicationContext.getBean("webScraper");
-
-        //webScraper.getReadingsFromWeb();
     }
 
 }

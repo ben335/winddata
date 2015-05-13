@@ -13,5 +13,6 @@
         <property name="minWindSpeed" column="MIN_WIND_SPEED" type="java.lang.Double"/>
         <property name="avgWindSpeed" column="AVG_WIND_SPEED" type="java.lang.Double"/>
         <property name="maxWindSpeed" column="MAX_WIND_SPEED" type="java.lang.Double"/>
+        <property name="stationId" column="STATION_ID" type="java.lang.Integer"/>
     </class>
 </hibernate-mapping>

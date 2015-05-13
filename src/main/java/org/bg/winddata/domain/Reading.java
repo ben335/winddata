@@ -12,12 +12,13 @@ public class Reading {
     double minWindSpeed;
     double avgWindSpeed;
     double maxWindSpeed;
+    int stationId; //foreign key
 
 
     public Reading() {
     }
 
-    public Reading(int id, Timestamp dateTime, int backed, int avgWindDirection, int veered, double minWindSpeed, double avgWindSpeed, double maxWindSpeed) {
+    public Reading(int id, Timestamp dateTime, int backed, int avgWindDirection, int veered, double minWindSpeed, double avgWindSpeed, double maxWindSpeed, int stationId) {
         this.id = id;
         this.dateTime = dateTime;
         this.backed = backed;
@@ -26,6 +27,7 @@ public class Reading {
         this.minWindSpeed = minWindSpeed;
         this.avgWindSpeed = avgWindSpeed;
         this.maxWindSpeed = maxWindSpeed;
+        this.stationId = stationId;
     }
 
     public int getId() {
@@ -90,5 +92,13 @@ public class Reading {
 
     public void setMaxWindSpeed(double maxWindSpeed) {
         this.maxWindSpeed = maxWindSpeed;
+    }
+
+    public int getStationId() {
+        return stationId;
+    }
+
+    public void setStationId(int stationId) {
+        this.stationId = stationId;
     }
 }

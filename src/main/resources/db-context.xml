@@ -41,6 +41,7 @@
         <property name="password" value="root" />
     </bean>
 
+
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
@@ -54,10 +55,17 @@
     </bean>
 
     <task:annotation-driven />
-    <bean id="webScraper"
+    <bean id="webScraper-lymington"
           class="org.bg.winddata.service.WeatherFileWebScraper">
           <constructor-arg type="java.lang.String" value="http://www.weather-file.com/lymington/graph.htm"/>
           <constructor-arg ref="daoFactory"/>
+          <constructor-arg type="int" value="1"/> <!--foreign key for station id LYMINGTON-->
     </bean>
 
+    <bean id="webScraper-hurst"
+          class="org.bg.winddata.service.WeatherFileWebScraper">
+        <constructor-arg type="java.lang.String" value="http://www.weather-file.com/hurst/graph.htm"/>
+        <constructor-arg ref="daoFactory"/>
+        <constructor-arg type="int" value="2"/> <!--foreign key for station id HURST-->
+    </bean>
 </beans>

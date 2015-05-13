@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 public class WeatherFileWebScraper extends WebScraper {
 
-    public WeatherFileWebScraper(String url, DaoFactory daoFactory) throws IOException {
-        super(url, daoFactory);
+    public WeatherFileWebScraper(String url, DaoFactory daoFactory, int stationID) throws IOException {
+        super(url, daoFactory, stationID);
     }
 
     public Elements parseElements(Document doc) {
@@ -54,6 +54,8 @@ public class WeatherFileWebScraper extends WebScraper {
                 reading.setMinWindSpeed(Double.parseDouble(tds.get(5).text()));
                 reading.setAvgWindSpeed(Double.parseDouble(tds.get(6).text()));
                 reading.setMaxWindSpeed(Double.parseDouble(tds.get(7).text()));
+                reading.setStationId(stationId);
+                //logger.info("Station ID set to: " + stationId);
                 listOfReadingsTemp.add(reading);
             }
         }
