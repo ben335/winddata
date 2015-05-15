@@ -14,7 +14,7 @@
 
 
     <tx:annotation-driven transaction-manager="transactionManager" />
-
+    <task:annotation-driven />
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
@@ -34,12 +34,7 @@
         </property>
     </bean>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:8889/winddata" />
-        <property name="username" value="root" />
-        <property name="password" value="root" />
-    </bean>
+
 
 
     <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
@@ -54,7 +49,6 @@
         <property name="readingDao" ref="readingDao" />
     </bean>
 
-    <task:annotation-driven />
     <bean id="webScraper-lymington"
           class="org.bg.winddata.service.WeatherFileWebScraper">
           <constructor-arg type="java.lang.String" value="http://www.weather-file.com/lymington/graph.htm"/>

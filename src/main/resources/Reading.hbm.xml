@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.bg.winddata.domain.Reading" table="reading">
+    <class name="org.bg.winddata.domain.Reading" table="READING">
         <id name="id" column="ID"/>
         <property name="dateTime" column="LOCAL_DATE_TIME" type="java.sql.Timestamp" />
         <property name="backed" column="BACKED" type="java.lang.Integer"/>

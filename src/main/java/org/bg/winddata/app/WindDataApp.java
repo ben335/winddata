@@ -14,7 +14,7 @@ public class WindDataApp {
 
         logger.info("WINDDATA APPLICATION STARTING");
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/db-context.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/db-context.xml");
 
     }
 

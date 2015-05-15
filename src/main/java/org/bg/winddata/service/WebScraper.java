@@ -58,7 +58,7 @@ public abstract class WebScraper {
 
     public void setStationId(int stationId) { this.stationId = stationId; }
 
-
+    //every five minutes
     @Scheduled(cron="0 0/5 * * * ?")
     public void getReadingsFromWeb() throws IOException {
         logger.info("Getting Readings from website: " + url);
